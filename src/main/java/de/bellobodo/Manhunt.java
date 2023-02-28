@@ -21,7 +21,7 @@ public final class Manhunt extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        gameState = GameState.LOBBY;
+        gameState = GameState.HEADSTART;
 
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);

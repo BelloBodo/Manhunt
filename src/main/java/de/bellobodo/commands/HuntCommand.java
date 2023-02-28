@@ -65,7 +65,6 @@ public class HuntCommand implements CommandExecutor {
                 break;
         }
 
-
         return false;
     }
 

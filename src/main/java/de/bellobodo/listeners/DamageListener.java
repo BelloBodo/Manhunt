@@ -1,41 +1,32 @@
 package de.bellobodo.listeners;
 
-import de.bellobodo.commands.HuntCommand;
+import de.bellobodo.Manhunt;
+import de.bellobodo.manager.SpeedrunnerManager;
+import de.bellobodo.other.GameState;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class DamageListener implements Listener {
 
-    public void onPlayerDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntityType() != EntityType.PLAYER) {
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        if (!(entityIsPlayer(event.getEntity().getType())) || !(entityIsPlayer(event.getDamager().getType()))) {
             return;
         }
-        if (event.getDamager().getType() != EntityType.PLAYER) {return;}
 
         Player player = (Player) event.getEntity();
         Player damager = (Player) event.getDamager();
 
-        AtomicBoolean playerIsSpeedrunner = new AtomicBoolean(false);
 
-        AtomicBoolean damagerIsSpeedrunner = new AtomicBoolean(false);
 
-        HuntCommand.speedrunner.forEach(players -> {
-            if (players == player) {
-                playerIsSpeedrunner.set(true);
-            }
-            if (players == damager) {
-                damagerIsSpeedrunner.set(true);
-            }
-        });
-
-        if (playerIsSpeedrunner == damagerIsSpeedrunner) {
+        if (Manhunt.getGameState() == GameState.HEADSTART ||
+                (SpeedrunnerManager.isSpeedrunner(player) == SpeedrunnerManager.isSpeedrunner(damager))) {
             event.setCancelled(true);
         }
+    }
 
-
+    private boolean entityIsPlayer(EntityType entityType) {
+        return entityType != EntityType.PLAYER;
     }
 }

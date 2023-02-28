@@ -1,0 +1,4 @@
+name: Manhunt
+version: '${project.version}'
+main: de.bellobodo.Manhunt
+api-version: 1.19

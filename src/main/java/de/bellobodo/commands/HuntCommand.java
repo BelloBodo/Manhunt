@@ -2,62 +2,48 @@ package de.bellobodo.commands;
 
 import de.bellobodo.Manhunt;
 import de.bellobodo.manager.SpeedrunnerManager;
+import de.bellobodo.other.GameState;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-
 public class HuntCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + "Du musst ein Spieler sein!");
-        }
-
-        Player player = Manhunt.getInstance().getServer().getPlayer(args[1]);
 
         switch (args[0]) {
             case "add": {
+                if (!checkGamestatePending(sender)) {
+                    break;
+                }
+
                 if (args.length != 2) {
                     sendUsage(sender);
                     break;
                 }
 
+                Player player = Manhunt.getInstance().getServer().getPlayer(args[1]);
+
                 if (player == null) {
-                    sender.sendMessage(ChatColor.RED + "Du musst einen Spieler angeben!");
+                    sendEnterValidPlayer(sender);
                 } else {
-                    if (SpeedrunnerManager.addSpeedrunner(player)) {
+                    if (SpeedrunnerManager.setSpeedrunner(player)) {
                         sender.sendMessage(ChatColor.GREEN + "Der Spieler wurde erfolgreich hinzugefügt.");
                     } else {
-                        sender.sendMessage(ChatColor.GREEN + "Der Spieler konnte nicht hinzugefügt werden werden.");
-                    }
-                }
-
-                break;
-            }
-            case "remove": {
-                if (args.length != 2) {
-                    sendUsage(sender);
-                    break;
-                }
-
-                if (player == null) {
-                    sender.sendMessage(ChatColor.RED + "Du musst einen Spieler angeben!");
-                } else {
-                    if (SpeedrunnerManager.removeSpeedrunner(player)) {
-                        sender.sendMessage(ChatColor.GREEN + "Der Spieler wurde erfolgreich entfernt.");
-                    } else {
-                        sender.sendMessage(ChatColor.GREEN + "Der Spieler konnte nicht entfernt werden.");
+                        sender.sendMessage(ChatColor.GREEN + "Der Spieler ist schon Speedrunner.");
                     }
                 }
 
                 break;
             }
             case "start": {
-
+                //TODO cmd Start
+                break;
+            }
+            case "stop": {
+                //TODO cmd Stop
                 break;
             }
             default:
@@ -66,6 +52,19 @@ public class HuntCommand implements CommandExecutor {
         }
 
         return false;
+    }
+
+    private void sendEnterValidPlayer(CommandSender sender) {
+        sender.sendMessage(ChatColor.RED + "Du musst einen Spieler angeben.");
+    }
+
+    private boolean checkGamestatePending(CommandSender sender) {
+        if (Manhunt.getGameState() != GameState.PENDING) {
+            sender.sendMessage(ChatColor.RED + "Das Spiel wurde bereits gestartet." + ChatColor.BLUE +
+                    " Stoppe das Spiel mit" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY + "/hunt stop");
+            return false;
+        }
+        return true;
     }
 
     private void sendUsage(CommandSender sender) {

@@ -1,5 +1,6 @@
 package de.bellobodo;
 
+import de.bellobodo.Counter.GameCounter;
 import de.bellobodo.commands.HuntCommand;
 import de.bellobodo.listeners.DamageListener;
 import de.bellobodo.listeners.DeathListener;
@@ -14,6 +15,8 @@ public final class Manhunt extends JavaPlugin {
 
     private static GameState gameState;
 
+    private static GameCounter gameCounter;
+
     @Override
     public void onLoad() {
         instance = this;
@@ -21,14 +24,16 @@ public final class Manhunt extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        gameState = GameState.HEADSTART;
+        gameState = GameState.PENDING;
+
+        gameCounter = new GameCounter();
 
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
 
 
-        getCommand("start").setExecutor(new HuntCommand());
+        getCommand("hunt").setExecutor(new HuntCommand());
     }
 
     @Override
@@ -46,5 +51,9 @@ public final class Manhunt extends JavaPlugin {
 
     public static void setGameState(GameState gameState) {
         Manhunt.gameState = gameState;
+    }
+
+    public static GameCounter getGameCounter() {
+        return gameCounter;
     }
 }

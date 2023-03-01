@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class SpeedrunnerManager {
 
-    private static ArrayList<Player> speedrunner = new ArrayList<>();
+    private static ArrayList<Player> speedrunner = new ArrayList<Player>();
 
     /**
      @return true if Player is a Speedrunner

@@ -27,6 +27,6 @@ public class DamageListener implements Listener {
     }
 
     private boolean entityIsPlayer(EntityType entityType) {
-        return entityType != EntityType.PLAYER;
+        return entityType == EntityType.PLAYER;
     }
 }

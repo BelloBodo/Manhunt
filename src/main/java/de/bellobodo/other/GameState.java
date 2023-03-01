@@ -2,5 +2,5 @@ package de.bellobodo.other;
 
 public enum GameState {
 
-    HEADSTART, STARTED, FINISHED;
+    HEADSTART, IN_PROGRESS, FINISHED
 }

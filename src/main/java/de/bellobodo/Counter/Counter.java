@@ -14,22 +14,48 @@ public abstract class Counter implements Runnable {
     /**
      * started Seconds of Task
      */
-    private int Seconds;
+    private int seconds;
 
     /**
      * The bukkit task
      */
     private BukkitTask task;
 
-    public void startCountdown(int startSeconds) {
+    /**
+     * Starts the Counter with starting Seconds
+     */
+    public void startCounter(int startSeconds) {
         this.running = true;
-        this.Seconds = startSeconds;
+        this.seconds = startSeconds;
         this.onStart();
+        this.startTask();
+    }
+
+    /**
+     * Starts the Counter at 0 Seconds
+     */
+    public void startCounter() {
+        this.running = true;
+        this.seconds = 0;
+        this.onStart();
+        this.startTask();
+    }
+
+    /**
+     * Starts the Counter with the previous Seconds
+     */
+    public void resumeCounter() {
+        this.running = true;
+        this.onResume();
+        this.startTask();
+    }
+
+    private void startTask() {
         this.task = Bukkit.getScheduler().runTaskTimer(Manhunt.getInstance(), () -> {
 
             Counter.this.run();
 
-            Counter.this.Seconds++;
+            Counter.this.seconds++;
         }, 0, 20);
     }
 
@@ -39,9 +65,14 @@ public abstract class Counter implements Runnable {
     public abstract void onStart();
 
     /**
+     * Will be called on resume of task
+     */
+    public abstract void onResume();
+
+    /**
      * Cancel the Task
      */
-    public void cancelCounter() {
+    public void pauseCounter() {
         this.running = false;
         this.task.cancel();
     }
@@ -51,7 +82,7 @@ public abstract class Counter implements Runnable {
     }
 
     public int getSeconds() {
-        return Seconds;
+        return seconds;
     }
 
     public BukkitTask getTask() {

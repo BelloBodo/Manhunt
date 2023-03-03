@@ -7,6 +7,11 @@ public class GameCounter extends Counter {
     }
 
     @Override
+    public void onResume() {
+
+    }
+
+    @Override
     public void run() {
         //TODO Bottom Bar Zeit anzeigen
         //TODO Compass aktualisieren

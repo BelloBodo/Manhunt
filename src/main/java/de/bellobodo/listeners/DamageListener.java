@@ -15,8 +15,8 @@ public class DamageListener implements Listener {
             return;
         }
 
-        Player player = (Player) event.getEntity();
-        Player damager = (Player) event.getDamager();
+        final Player player = (Player) event.getEntity();
+        final Player damager = (Player) event.getDamager();
 
 
 

@@ -14,7 +14,7 @@ public class HuntCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         switch (args[0]) {
-            case "add": {
+            case "set": {
                 if (!checkGamestatePending(sender)) {
                     break;
                 }
@@ -24,7 +24,7 @@ public class HuntCommand implements CommandExecutor {
                     break;
                 }
 
-                Player player = Manhunt.getInstance().getServer().getPlayer(args[1]);
+                final Player player = Manhunt.getInstance().getServer().getPlayer(args[1]);
 
                 if (player == null) {
                     sendEnterValidPlayer(sender);
@@ -54,11 +54,7 @@ public class HuntCommand implements CommandExecutor {
         return false;
     }
 
-    private void sendEnterValidPlayer(CommandSender sender) {
-        sender.sendMessage(ChatColor.RED + "Du musst einen Spieler angeben.");
-    }
-
-    private boolean checkGamestatePending(CommandSender sender) {
+    private boolean checkGamestatePending(final CommandSender sender) {
         if (Manhunt.getGameState() != GameState.PENDING) {
             sender.sendMessage(ChatColor.RED + "Das Spiel wurde bereits gestartet." + ChatColor.BLUE +
                     " Stoppe das Spiel mit" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY + "/hunt stop");
@@ -67,7 +63,11 @@ public class HuntCommand implements CommandExecutor {
         return true;
     }
 
-    private void sendUsage(CommandSender sender) {
+    private void sendEnterValidPlayer(final CommandSender sender) {
+        sender.sendMessage(ChatColor.RED + "Du musst einen Spieler angeben.");
+    }
+
+    private void sendUsage(final CommandSender sender) {
         sender.sendMessage(ChatColor.BLUE + "Verwende" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY +
                 "/hunt start [Zeit], /hunt (add/remove) [Spieler]");
     }

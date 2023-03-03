@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 public class MoveListener implements Listener {
 
     public void onPlayerMove(PlayerMoveEvent event) {
-        Player player = event.getPlayer();
+        final Player player = event.getPlayer();
 
         //TODO Abfrage wann man sich bewegen darf
     }

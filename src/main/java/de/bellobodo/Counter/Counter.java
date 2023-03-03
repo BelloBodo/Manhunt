@@ -7,6 +7,11 @@ import org.bukkit.scheduler.BukkitTask;
 public abstract class Counter implements Runnable {
 
     /**
+     * The instance of the Main Class
+     */
+    private final Manhunt instance = Manhunt.getInstance();
+
+    /**
      * Boolean if task run
      */
     private boolean running = false;
@@ -22,9 +27,19 @@ public abstract class Counter implements Runnable {
     private BukkitTask task;
 
     /**
+     * Will be called on start of task
+     */
+    public abstract void onStart();
+
+    /**
+     * Will be called on resume of task
+     */
+    public abstract void onResume();
+
+    /**
      * Starts the Counter with starting Seconds
      */
-    public void startCounter(int startSeconds) {
+    public void startCounter(final int startSeconds) {
         this.running = true;
         this.seconds = startSeconds;
         this.onStart();
@@ -51,23 +66,13 @@ public abstract class Counter implements Runnable {
     }
 
     private void startTask() {
-        this.task = Bukkit.getScheduler().runTaskTimer(Manhunt.getInstance(), () -> {
+        this.task = Bukkit.getScheduler().runTaskTimer(instance, () -> {
 
             Counter.this.run();
 
             Counter.this.seconds++;
         }, 0, 20);
     }
-
-    /**
-     * Will be called on start of task
-     */
-    public abstract void onStart();
-
-    /**
-     * Will be called on resume of task
-     */
-    public abstract void onResume();
 
     /**
      * Cancel the Task

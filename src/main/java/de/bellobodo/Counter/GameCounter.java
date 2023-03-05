@@ -1,6 +1,7 @@
 package de.bellobodo.Counter;
 
 import de.bellobodo.Manhunt;
+import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.other.GameState;
 import de.bellobodo.render.CompassManager;
 import de.bellobodo.render.HotbarManager;
@@ -18,13 +19,12 @@ public class GameCounter extends Counter {
         if (getSeconds() >= 0 && Manhunt.getGameState() == GameState.HEADSTART) {
             Manhunt.setGameState(GameState.IN_PROGRESS);
 
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                player.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel beginnt.", "", 10, 20, 10);
-            });
+            Bukkit.getOnlinePlayers().forEach(player ->
+                    player.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel beginnt.", "", 10, 20, 10));
         }
 
-
-        HotbarManager.updateHotbar(getSeconds());
-        CompassManager.updateCompass();
+        SpeedrunnerManager.updateLocation();
+        HotbarManager.updatePlayerHotbar(getSeconds());
+        CompassManager.updatePlayerCompass();
     }
 }

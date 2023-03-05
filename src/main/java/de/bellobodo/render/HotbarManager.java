@@ -11,11 +11,11 @@ public class HotbarManager {
 
     private static int gameSeconds;
 
-    public static void updateHotbar() {
+    public static void updatePlayerHotbar() {
         loopThroughPlayers();
     }
 
-    public static void updateHotbar(int seconds) {
+    public static void updatePlayerHotbar(int seconds) {
         if (seconds < 0) {
             seconds = seconds * -1;
         }
@@ -24,9 +24,8 @@ public class HotbarManager {
     }
 
     private static void loopThroughPlayers() {
-        Bukkit.getOnlinePlayers().forEach(players -> {
-            players.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(getHotbarMessage()));
-        });
+        Bukkit.getOnlinePlayers().forEach(players ->
+                players.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(getHotbarMessage())));
     }
 
     private static String getHotbarMessage() {

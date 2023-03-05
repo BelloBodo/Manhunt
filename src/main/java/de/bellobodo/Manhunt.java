@@ -36,7 +36,7 @@ public final class Manhunt extends JavaPlugin {
 
         getCommand("hunt").setExecutor(new HuntCommand());
 
-        HotbarManager.updateHotbar();
+        HotbarManager.updatePlayerHotbar();
     }
 
     @Override
@@ -54,9 +54,5 @@ public final class Manhunt extends JavaPlugin {
 
     public static void setGameState(GameState gameState) {
         Manhunt.gameState = gameState;
-    }
-
-    public static GameCounter getGameCounter() {
-        return gameCounter;
     }
 }

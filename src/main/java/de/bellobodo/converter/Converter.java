@@ -5,6 +5,7 @@ public class Converter {
     public static String convertIntToTime(final int time) {
 
         String result;
+
         final int day = time / 86400;
         final int hour = (time - 86400 * day) / 3600;
         final int minute = (time - 3600 * hour - 86400 * day) / 60;
@@ -22,7 +23,6 @@ public class Converter {
             result = hour + "h " + minute + "m " + second + "s";
             return result;
         }
-
         result = day + "d " + hour + "h " + minute + "m " + second + "s";
         return result;
     }

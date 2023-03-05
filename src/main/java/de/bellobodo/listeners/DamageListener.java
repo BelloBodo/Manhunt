@@ -1,6 +1,5 @@
 package de.bellobodo.listeners;
 
-import de.bellobodo.Counter.GameCounter;
 import de.bellobodo.Manhunt;
 import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.other.GameState;
@@ -21,7 +20,7 @@ public class DamageListener implements Listener {
 
 
 
-        if (Manhunt.getGameState() == GameState.HEADSTART ||
+        if (Manhunt.getGameState() != GameState.IN_PROGRESS ||
                 (SpeedrunnerManager.isSpeedrunner(player) == SpeedrunnerManager.isSpeedrunner(damager))) {
             event.setCancelled(true);
         }

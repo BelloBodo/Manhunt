@@ -1,6 +1,7 @@
 package de.bellobodo.render;
 
 import de.bellobodo.Manhunt;
+import de.bellobodo.converter.Converter;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -10,13 +11,14 @@ public class HotbarManager {
 
     private static int gameSeconds;
 
-    private static String pendingMessage = ChatColor.DARK_GRAY + "Das Spiel wurde noch nicht gestartet.";
-
     public static void updateHotbar() {
         loopThroughPlayers();
     }
 
-    public static void updateHotbar(final int seconds) {
+    public static void updateHotbar(int seconds) {
+        if (seconds < 0) {
+            seconds = seconds * -1;
+        }
         gameSeconds = seconds;
         loopThroughPlayers();
     }
@@ -30,27 +32,23 @@ public class HotbarManager {
     private static String getHotbarMessage() {
         switch (Manhunt.getGameState()) {
             case PENDING: {
-                return pendingMessage;
+                return ChatColor.DARK_GRAY + "Das Spiel wurde noch nicht gestartet.";
             }
             case HEADSTART: {
-                return "";
+                return ChatColor.YELLOW + Converter.convertIntToTime(gameSeconds);
             }
             case IN_PROGRESS: {
-                return "";
+                return ChatColor.BOLD + ChatColor.GOLD.toString() + Converter.convertIntToTime(gameSeconds);
             }
             case PAUSED: {
-                return "";
+                return ChatColor.ITALIC + ChatColor.GREEN.toString() + "Das Spiel ist pausiert.";
             }
             case FINISHED: {
-                return "";
+                return ChatColor.BOLD + ChatColor.DARK_PURPLE.toString() + "Das Spiel wurde beendet.";
             }
             default:
                 return "";
         }
-        //TODO unterschiedliche Fälle der Hotbar eintragen
-
-
-
     }
 
 

@@ -32,11 +32,6 @@ public abstract class Counter implements Runnable {
     public abstract void onStart();
 
     /**
-     * Will be called on resume of task
-     */
-    public abstract void onResume();
-
-    /**
      * Starts the Counter with starting Seconds
      */
     public void startCounter(final int startSeconds) {
@@ -61,7 +56,7 @@ public abstract class Counter implements Runnable {
      */
     public void resumeCounter() {
         this.running = true;
-        this.onResume();
+        this.onStart();
         this.startTask();
     }
 

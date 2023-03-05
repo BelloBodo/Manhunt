@@ -1,5 +1,8 @@
 package de.bellobodo.Counter;
 
+import de.bellobodo.render.CompassManager;
+import de.bellobodo.render.HotbarManager;
+
 public class GameCounter extends Counter {
     @Override
     public void onStart() {
@@ -7,13 +10,8 @@ public class GameCounter extends Counter {
     }
 
     @Override
-    public void onResume() {
-
-    }
-
-    @Override
     public void run() {
-        //TODO Bottom Bar Zeit anzeigen
-        //TODO Compass aktualisieren
+        HotbarManager.updateHotbar(getSeconds());
+        CompassManager.updateCompass();
     }
 }

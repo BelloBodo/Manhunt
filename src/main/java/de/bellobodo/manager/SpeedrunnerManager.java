@@ -1,6 +1,7 @@
 package de.bellobodo.manager;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class SpeedrunnerManager {
@@ -12,6 +13,9 @@ public class SpeedrunnerManager {
     private static Location netherLocation;
 
     private static Location endLocation;
+
+    private static Location customLocation;
+
 
 
     public static void updateLocation() {
@@ -25,22 +29,16 @@ public class SpeedrunnerManager {
             case THE_END:
                 endLocation = speedrunner.getLocation();
                 break;
-            default:
+            case CUSTOM:
+                customLocation = speedrunner.getLocation();
                 break;
         }
     }
 
     public static void resetLocation() {
-        switch (speedrunner.getWorld().getEnvironment()) {
-            case NORMAL:
-                break;
-            case NETHER:
-                break;
-            case THE_END:
-                break;
-            default:
-                break;
-        }
+        overworldLocation = null;
+        netherLocation = null;
+        endLocation = null;
     }
 
     /**
@@ -64,5 +62,19 @@ public class SpeedrunnerManager {
 
     public static Player getSpeedrunner() {
         return speedrunner;
+    }
+
+    public static Location getLocation(final World.Environment environment) {
+        switch (speedrunner.getWorld().getEnvironment()) {
+            case NORMAL:
+                return overworldLocation;
+            case NETHER:
+                return netherLocation;
+            case THE_END:
+                return endLocation;
+            case CUSTOM:
+                return customLocation;
+        }
+        return null;
     }
 }

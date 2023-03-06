@@ -5,11 +5,13 @@ import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.other.GameState;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class DamageListener implements Listener {
 
+    @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (!(entityIsPlayer(event.getEntity().getType())) || !(entityIsPlayer(event.getDamager().getType()))) {
             return;

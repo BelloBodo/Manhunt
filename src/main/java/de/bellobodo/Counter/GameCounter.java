@@ -1,6 +1,7 @@
 package de.bellobodo.Counter;
 
 import de.bellobodo.Manhunt;
+import de.bellobodo.game.Start;
 import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.other.GameState;
 import de.bellobodo.render.CompassManager;
@@ -15,10 +16,7 @@ public class GameCounter extends Counter {
             Manhunt.setGameState(GameState.HEADSTART);
         }
 
-        Bukkit.getOnlinePlayers().forEach(player ->
-                player.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() +
-                        "Das Spiel wurde gestartet.", "", 10, 20, 10));
-
+        Start.gameCounterStart();
     }
 
     @Override

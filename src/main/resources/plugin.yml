@@ -4,4 +4,4 @@ main: de.bellobodo.Manhunt
 api-version: 1.19
 commands:
   hunt:
-    usage: All commands for Manhunt
+    description: All commands for manhunt

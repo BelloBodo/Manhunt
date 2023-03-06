@@ -16,7 +16,7 @@ public class CompassManager {
 
             if (players.getInventory().contains(Material.COMPASS)) {
 
-                players.getInventory().all(Material.COMPASS).forEach((integer, itemStacks) -> {
+                players.getInventory().all(Material.COMPASS).forEach((index, itemStacks) -> {
 
                     updateCompassMeta(players.getWorld().getEnvironment());
 
@@ -25,15 +25,15 @@ public class CompassManager {
                     }
                 });
             }
+
         });
     }
 
     private static void updateCompassMeta(final World.Environment environment) {
         if (compassMeta == null) {
-            ItemStack compass = new ItemStack(Material.COMPASS);
-            compassMeta = (CompassMeta) compass.getItemMeta();
+            compassMeta = (CompassMeta) new ItemStack(Material.COMPASS);
         }
-
         compassMeta.setLodestone(SpeedrunnerManager.getLocation(environment));
+        compassMeta.setLodestoneTracked(false);
     }
 }

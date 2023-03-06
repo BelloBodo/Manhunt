@@ -3,6 +3,7 @@ package de.bellobodo.commands;
 import de.bellobodo.Manhunt;
 import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.other.GameState;
+import de.bellobodo.render.HotbarManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,15 +14,20 @@ public class HuntCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        switch (args[0]) {
+        if (args.length == 0) {
+            sendUsage(sender);
+            return true;
+        }
+
+        switch (args[0].toLowerCase()) {
             case "set": {
                 if (isGamestateIngame(sender)) {
-                    break;
+                    return true;
                 }
 
                 if (args.length != 2) {
                     sendUsage(sender);
-                    break;
+                    return true;
                 }
 
                 final Player player = Manhunt.getInstance().getServer().getPlayer(args[1]);
@@ -42,9 +48,9 @@ public class HuntCommand implements CommandExecutor {
                 if (isGamestateIngame(sender)) {
 
                 } else {
-                    if (args.length == 2) {
+                    if (args.length != 2) {
                         sendUsage(sender);
-                        break;
+                        return true;
                     }
 
                     int headstartSeconds = 0;
@@ -54,7 +60,7 @@ public class HuntCommand implements CommandExecutor {
                         sender.sendMessage(ChatColor.RED + "Du musst eine Zahl angeben.");
                     }
 
-                    if (headstartSeconds < 0) {
+                    if (headstartSeconds > 0) {
                         headstartSeconds = headstartSeconds * -1;
                     }
 
@@ -67,34 +73,37 @@ public class HuntCommand implements CommandExecutor {
 
                 } else {
                     Manhunt.getGameCounter().stopCounter();
-                }
 
+                    Manhunt.setGameState(GameState.PENDING);
+                    HotbarManager.updatePlayerHotbar();
+
+                    sender.sendMessage(ChatColor.GREEN + "Das Spiel wurde gestoppt.");
+                }
                 break;
             }
             default:
                 sendUsage(sender);
                 break;
         }
-
-        return false;
+        return true;
     }
 
     private boolean isGamestatePending(final CommandSender sender) {
         if (Manhunt.getGameState() == GameState.PENDING) {
-            sender.sendMessage(ChatColor.RED + "Das Spiel wurde nicht gestartet." + ChatColor.BLUE +
+            sender.sendMessage(ChatColor.RED + "Das Spiel wurde noch nicht gestartet." + ChatColor.BLUE +
                     " Starte das Spiel mit" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY + "/hunt start");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private boolean isGamestateIngame(final CommandSender sender) {
-        if (!(Manhunt.getGameState() == GameState.PENDING)) {
+        if (Manhunt.getGameState() != GameState.PENDING) {
             sender.sendMessage(ChatColor.RED + "Das Spiel wurde bereits gestartet." + ChatColor.BLUE +
                     " Stoppe das Spiel mit" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY + "/hunt stop");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     private void sendEnterValidPlayer(final CommandSender sender) {

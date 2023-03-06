@@ -55,4 +55,8 @@ public final class Manhunt extends JavaPlugin {
     public static void setGameState(GameState gameState) {
         Manhunt.gameState = gameState;
     }
+
+    public static GameCounter getGameCounter() {
+        return gameCounter;
+    }
 }

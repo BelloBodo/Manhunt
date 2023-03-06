@@ -72,7 +72,7 @@ public abstract class Counter implements Runnable {
     /**
      * Cancel the Task
      */
-    public void pauseCounter() {
+    public void stopCounter() {
         this.running = false;
         this.task.cancel();
     }

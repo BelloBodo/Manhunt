@@ -11,6 +11,13 @@ import org.bukkit.ChatColor;
 public class GameCounter extends Counter {
     @Override
     public void onStart() {
+        if (Manhunt.getGameState() == GameState.PENDING) {
+            Manhunt.setGameState(GameState.HEADSTART);
+        }
+
+        Bukkit.getOnlinePlayers().forEach(player ->
+                player.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() +
+                        "Das Spiel wurde gestartet.", "", 10, 20, 10));
 
     }
 
@@ -20,11 +27,12 @@ public class GameCounter extends Counter {
             Manhunt.setGameState(GameState.IN_PROGRESS);
 
             Bukkit.getOnlinePlayers().forEach(player ->
-                    player.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel beginnt.", "", 10, 20, 10));
+                    player.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
+                            "Die Hunter sind frei.", "", 10, 20, 10));
         }
 
         SpeedrunnerManager.updateLocation();
-        HotbarManager.updatePlayerHotbar(getSeconds());
+        HotbarManager.updatePlayerHotbar();
         CompassManager.updatePlayerCompass();
     }
 }

@@ -15,7 +15,7 @@ public class HuntCommand implements CommandExecutor {
 
         switch (args[0]) {
             case "set": {
-                if (!checkGamestatePending(sender)) {
+                if (isGamestateIngame(sender)) {
                     break;
                 }
 
@@ -39,11 +39,36 @@ public class HuntCommand implements CommandExecutor {
                 break;
             }
             case "start": {
-                //TODO cmd Start
+                if (isGamestateIngame(sender)) {
+
+                } else {
+                    if (args.length == 2) {
+                        sendUsage(sender);
+                        break;
+                    }
+
+                    int headstartSeconds = 0;
+                    try {
+                        headstartSeconds = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException exception) {
+                        sender.sendMessage(ChatColor.RED + "Du musst eine Zahl angeben.");
+                    }
+
+                    if (headstartSeconds < 0) {
+                        headstartSeconds = headstartSeconds * -1;
+                    }
+
+                    Manhunt.getGameCounter().startCounter(headstartSeconds);
+                }
                 break;
             }
             case "stop": {
-                //TODO cmd Stop
+                if (isGamestatePending(sender)) {
+
+                } else {
+                    Manhunt.getGameCounter().stopCounter();
+                }
+
                 break;
             }
             default:
@@ -54,8 +79,17 @@ public class HuntCommand implements CommandExecutor {
         return false;
     }
 
-    private boolean checkGamestatePending(final CommandSender sender) {
-        if (Manhunt.getGameState() != GameState.PENDING) {
+    private boolean isGamestatePending(final CommandSender sender) {
+        if (Manhunt.getGameState() == GameState.PENDING) {
+            sender.sendMessage(ChatColor.RED + "Das Spiel wurde nicht gestartet." + ChatColor.BLUE +
+                    " Starte das Spiel mit" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY + "/hunt start");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isGamestateIngame(final CommandSender sender) {
+        if (!(Manhunt.getGameState() == GameState.PENDING)) {
             sender.sendMessage(ChatColor.RED + "Das Spiel wurde bereits gestartet." + ChatColor.BLUE +
                     " Stoppe das Spiel mit" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY + "/hunt stop");
             return false;

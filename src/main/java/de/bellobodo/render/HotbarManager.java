@@ -12,10 +12,7 @@ public class HotbarManager {
     private static int gameSeconds;
 
     public static void updatePlayerHotbar() {
-        loopThroughPlayers();
-    }
-
-    public static void updatePlayerHotbar(int seconds) {
+        int seconds = Manhunt.getGameCounter().getSeconds();
         if (seconds < 0) {
             seconds = seconds * -1;
         }
@@ -31,7 +28,7 @@ public class HotbarManager {
     private static String getHotbarMessage() {
         switch (Manhunt.getGameState()) {
             case PENDING: {
-                return ChatColor.DARK_GRAY + "Das Spiel wurde noch nicht gestartet.";
+                return ChatColor.DARK_GRAY + "Es wurde kein Spiel gestartet.";
             }
             case HEADSTART: {
                 return ChatColor.YELLOW + Converter.convertIntToTime(gameSeconds);
@@ -41,9 +38,6 @@ public class HotbarManager {
             }
             case PAUSED: {
                 return ChatColor.ITALIC + ChatColor.GREEN.toString() + "Das Spiel ist pausiert.";
-            }
-            case FINISHED: {
-                return ChatColor.BOLD + ChatColor.DARK_PURPLE.toString() + "Das Spiel wurde beendet.";
             }
             default:
                 return "";

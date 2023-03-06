@@ -18,5 +18,6 @@ public class MoveListener implements Listener {
                 event.setCancelled(true);
             }
         }
+        //TODO FIX Bug wenn Speedrunner leaft das er ein Hunter ist
     }
 }

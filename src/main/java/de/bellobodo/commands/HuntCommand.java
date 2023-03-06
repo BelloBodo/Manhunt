@@ -36,7 +36,7 @@ public class HuntCommand implements CommandExecutor {
                     sendEnterValidPlayer(sender);
                 } else {
                     if (SpeedrunnerManager.setSpeedrunner(player)) {
-                        sender.sendMessage(ChatColor.GREEN + "Der Spieler wurde erfolgreich hinzugefügt.");
+                        sender.sendMessage(ChatColor.GREEN + "Der Spieler wurde erfolgreich gesetzt.");
                     } else {
                         sender.sendMessage(ChatColor.GREEN + "Der Spieler ist schon Speedrunner.");
                     }

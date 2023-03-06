@@ -40,8 +40,10 @@ public class HunterManager {
         registeredHunters.clear();
     }
 
-    public static PlayerInventory giveCompass(PlayerInventory inventory) {
+    public static PlayerInventory setupHunters(PlayerInventory inventory) {
         inventory.setItem(0, new ItemStack(Material.COMPASS));
+
+        //TODO Heilen, Essen voll, XP clear
         return inventory;
     }
 

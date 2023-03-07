@@ -1,11 +1,11 @@
 package de.bellobodo.commands;
 
 import de.bellobodo.Manhunt;
+import de.bellobodo.gamestate.ChangeGameState;
 import de.bellobodo.manager.SpeedrunnerManager;
-import de.bellobodo.other.GameState;
+import de.bellobodo.gamestate.GameState;
 import de.bellobodo.render.HotbarManager;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,7 +39,7 @@ public class HuntCommand implements CommandExecutor {
                     if (SpeedrunnerManager.setSpeedrunner(player)) {
                         sender.sendMessage(ChatColor.GREEN + "Der Spieler wurde erfolgreich gesetzt.");
                     } else {
-                        sender.sendMessage(ChatColor.GREEN + "Der Spieler ist schon Speedrunner.");
+                        sender.sendMessage(ChatColor.RED + "Der Spieler ist schon Speedrunner.");
                     }
                 }
 
@@ -60,6 +60,7 @@ public class HuntCommand implements CommandExecutor {
                     }
 
                     int headstartSeconds = 0;
+
                     try {
                         headstartSeconds = Integer.parseInt(args[1]);
                     } catch (NumberFormatException exception) {
@@ -70,7 +71,12 @@ public class HuntCommand implements CommandExecutor {
                         headstartSeconds = headstartSeconds * -1;
                     }
 
+                    if (headstartSeconds == 0) {
+                        ChangeGameState.PENDINGtoIN_PROGRESS();
+                    }
+
                     Manhunt.getGameCounter().startCounter(headstartSeconds);
+                    ChangeGameState.PENDINGtoHEADSTART();
                 }
                 break;
             }
@@ -78,12 +84,7 @@ public class HuntCommand implements CommandExecutor {
                 if (isGamestatePending(sender)) {
 
                 } else {
-                    Manhunt.getGameCounter().stopCounter();
-
-                    Manhunt.setGameState(GameState.PENDING);
-                    HotbarManager.updatePlayerHotbar();
-
-                    sender.sendMessage(ChatColor.GREEN + "Das Spiel wurde gestoppt.");
+                    ChangeGameState.toPENDING();
                 }
                 break;
             }

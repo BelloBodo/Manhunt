@@ -6,7 +6,7 @@ import de.bellobodo.listeners.DamageListener;
 import de.bellobodo.listeners.DeathListener;
 import de.bellobodo.listeners.JoinListener;
 import de.bellobodo.listeners.MoveListener;
-import de.bellobodo.other.GameState;
+import de.bellobodo.gamestate.GameState;
 import de.bellobodo.render.HotbarManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,7 +39,7 @@ public final class Manhunt extends JavaPlugin {
 
         getCommand("hunt").setExecutor(new HuntCommand());
 
-        HotbarManager.updatePlayerHotbar();
+        HotbarManager.startHotbar();
     }
 
     @Override

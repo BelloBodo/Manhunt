@@ -1,9 +1,10 @@
 package de.bellobodo.Counter;
 
 import de.bellobodo.Manhunt;
-import de.bellobodo.game.Start;
+import de.bellobodo.gamestate.ChangeGameState;
+import de.bellobodo.manager.HunterManager;
 import de.bellobodo.manager.SpeedrunnerManager;
-import de.bellobodo.other.GameState;
+import de.bellobodo.gamestate.GameState;
 import de.bellobodo.render.CompassManager;
 import de.bellobodo.render.HotbarManager;
 import org.bukkit.Bukkit;
@@ -12,21 +13,13 @@ import org.bukkit.ChatColor;
 public class GameCounter extends Counter {
     @Override
     public void onStart() {
-        if (Manhunt.getGameState() == GameState.PENDING) {
-            Manhunt.setGameState(GameState.HEADSTART);
-        }
-
-        Start.gameCounterStart();
+        HotbarManager.updatePlayerHotbar();
     }
 
     @Override
     public void run() {
         if (getSeconds() >= 0 && Manhunt.getGameState() == GameState.HEADSTART) {
-            Manhunt.setGameState(GameState.IN_PROGRESS);
-
-            Bukkit.getOnlinePlayers().forEach(player ->
-                    player.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
-                            "Die Hunter sind frei.", "", 10, 20, 10));
+            ChangeGameState.HEADSTARTtoIN_PROGRESS();
         }
 
         SpeedrunnerManager.updateLocation();

@@ -16,7 +16,6 @@ public class HunterManager {
 
 
     /**
-     *
      * @return false if Player is a Speedrunner
      */
     public static boolean registerHunter(Player player) {
@@ -40,11 +39,12 @@ public class HunterManager {
         registeredHunters.clear();
     }
 
-    public static PlayerInventory setupHunters(PlayerInventory inventory) {
+    public static void setupHunters(Player player) {
+        PlayerInventory inventory = player.getInventory();
+
         inventory.setItem(0, new ItemStack(Material.COMPASS));
 
         //TODO Heilen, Essen voll, XP clear
-        return inventory;
     }
 
 }

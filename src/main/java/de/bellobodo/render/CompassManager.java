@@ -33,8 +33,8 @@ public class CompassManager {
         if (compassMeta == null) {
             ItemStack stack = new ItemStack(Material.COMPASS);
             compassMeta = (CompassMeta) stack.getItemMeta();
+            compassMeta.setLodestoneTracked(false);
         }
         compassMeta.setLodestone(SpeedrunnerManager.getLocation(environment));
-        compassMeta.setLodestoneTracked(false);
     }
 }

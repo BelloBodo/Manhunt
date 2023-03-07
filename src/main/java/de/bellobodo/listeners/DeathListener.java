@@ -1,8 +1,10 @@
 package de.bellobodo.listeners;
 
 import de.bellobodo.Manhunt;
+import de.bellobodo.gamestate.ChangeGameState;
 import de.bellobodo.manager.SpeedrunnerManager;
-import de.bellobodo.other.GameState;
+import de.bellobodo.gamestate.GameState;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -14,11 +16,12 @@ public class DeathListener implements Listener {
 
         if (event.getEntity() == SpeedrunnerManager.getSpeedrunner()) {
             if (Manhunt.getGameState() == GameState.IN_PROGRESS) {
-                Manhunt.setGameState(GameState.PENDING);
+                ChangeGameState.toPENDING();
             }
         }
 
-
-        event.getEntity().spigot().respawn();
+        Bukkit.getScheduler().runTaskLater(Manhunt.getInstance(), () -> {
+            event.getEntity().spigot().respawn();
+        }, 10);
     }
 }

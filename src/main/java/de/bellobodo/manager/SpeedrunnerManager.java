@@ -60,7 +60,10 @@ public class SpeedrunnerManager {
     @return true if new Player was added
      */
     public static boolean setSpeedrunner(final Player player) {
-        if (speedrunner == player) {
+        if (speedrunner == null) {
+            speedrunner = player;
+            return true;
+        } else if (speedrunner.getUniqueId().equals(player.getUniqueId())){
             return false;
         } else {
             speedrunner = player;

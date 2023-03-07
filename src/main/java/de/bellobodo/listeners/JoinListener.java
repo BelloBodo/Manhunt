@@ -23,7 +23,7 @@ public class JoinListener implements Listener {
        if (!HunterManager.isRegisteredHunter(player) && !SpeedrunnerManager.isSpeedrunner(player)) {
            player.getInventory().clear();
 
-           HunterManager.giveCompass(player.getInventory());
+           HunterManager.setupHunters(player.getInventory());
            
            HunterManager.registerHunter(player);
        }

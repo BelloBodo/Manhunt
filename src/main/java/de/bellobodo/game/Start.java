@@ -4,8 +4,6 @@ import de.bellobodo.manager.HunterManager;
 import de.bellobodo.manager.SpeedrunnerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 public class Start {
 
@@ -16,7 +14,6 @@ public class Start {
             if (!SpeedrunnerManager.isSpeedrunner(players)) {
                 HunterManager.setupHunters(players.getInventory());
             }
-
 
             players.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel wurde gestartet.", "", 10, 20, 10);
         });

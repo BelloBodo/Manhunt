@@ -5,6 +5,7 @@ import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.other.GameState;
 import de.bellobodo.render.HotbarManager;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -50,6 +51,11 @@ public class HuntCommand implements CommandExecutor {
                 } else {
                     if (args.length != 2) {
                         sendUsage(sender);
+                        return true;
+                    }
+
+                    if (SpeedrunnerManager.getSpeedrunner() == null) {
+                        sendEnterValidPlayer(sender);
                         return true;
                     }
 

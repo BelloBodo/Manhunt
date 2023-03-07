@@ -18,14 +18,20 @@ public class JoinListener implements Listener {
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent event) {
+
         Player player = event.getPlayer();
 
-       if (!HunterManager.isRegisteredHunter(player) && !SpeedrunnerManager.isSpeedrunner(player)) {
-           player.getInventory().clear();
+        if (SpeedrunnerManager.isSpeedrunner(event.getPlayer())) {
+            SpeedrunnerManager.setSpeedrunner(event.getPlayer());
+        } else if (Manhunt.getGameState() != GameState.PENDING) {
 
-           HunterManager.setupHunters(player.getInventory());
-           
-           HunterManager.registerHunter(player);
-       }
+            if (!HunterManager.isRegisteredHunter(player)) {
+                player.getInventory().clear();
+
+                HunterManager.setupHunters(player.getInventory());
+
+                HunterManager.registerHunter(player);
+            }
+        }
     }
 }

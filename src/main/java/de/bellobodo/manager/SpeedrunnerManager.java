@@ -3,11 +3,12 @@ package de.bellobodo.manager;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 public class SpeedrunnerManager {
 
-    private static OfflinePlayer offlineSpeedrunner;
+    private static Player speedrunner;
 
     private static Location overworldLocation;
 
@@ -20,21 +21,19 @@ public class SpeedrunnerManager {
 
 
     public static void updateLocation() {
-        if (offlineSpeedrunner.isOnline()) {
-            Player player = (Player) offlineSpeedrunner;
-
-            switch (player.getWorld().getEnvironment()) {
+        if (speedrunner.isOnline()) {
+            switch (speedrunner.getWorld().getEnvironment()) {
                 case NORMAL:
-                    overworldLocation = player.getLocation();
+                    overworldLocation = speedrunner.getLocation();
                     break;
                 case NETHER:
-                    netherLocation = player.getLocation();
+                    netherLocation = speedrunner.getLocation();
                     break;
                 case THE_END:
-                    endLocation = player.getLocation();
+                    endLocation = speedrunner.getLocation();
                     break;
                 case CUSTOM:
-                    customLocation = player.getLocation();
+                    customLocation = speedrunner.getLocation();
                     break;
             }
         }
@@ -50,23 +49,27 @@ public class SpeedrunnerManager {
      @return true if Player is a Speedrunner
      */
     public static boolean isSpeedrunner(final Player player) {
-        return offlineSpeedrunner == player;
+        try {
+            return speedrunner.getUniqueId().equals(player.getUniqueId());
+        } catch (NullPointerException exception) {
+            return false;
+        }
     }
 
     /**
     @return true if new Player was added
      */
     public static boolean setSpeedrunner(final Player player) {
-        if (offlineSpeedrunner == player) {
+        if (speedrunner == player) {
             return false;
         } else {
-            offlineSpeedrunner = player;
+            speedrunner = player;
             return true;
         }
     }
 
-    public static OfflinePlayer getOfflineSpeedrunner() {
-        return offlineSpeedrunner;
+    public static Player getSpeedrunner() {
+        return speedrunner;
     }
 
     public static Location getLocation(final World.Environment environment) {

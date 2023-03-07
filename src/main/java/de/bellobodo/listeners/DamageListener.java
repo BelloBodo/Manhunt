@@ -13,19 +13,28 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(entityIsPlayer(event.getEntity().getType())) || !(entityIsPlayer(event.getDamager().getType()))) {
+        if (!(entityIsPlayer(event.getDamager().getType()))) {
             return;
         }
 
-        final Player player = (Player) event.getEntity();
         final Player damager = (Player) event.getDamager();
 
+        if (Manhunt.getGameState() == GameState.IN_PROGRESS) {
 
+            final Player player = (Player) event.getEntity();
 
-        if (Manhunt.getGameState() != GameState.IN_PROGRESS ||
-                (SpeedrunnerManager.isSpeedrunner(player) == SpeedrunnerManager.isSpeedrunner(damager))) {
-            event.setCancelled(true);
+            if (isSameTeam(player, damager)) {
+                event.setCancelled(true);
+            }
+        } else {
+            if (!SpeedrunnerManager.isSpeedrunner(damager)) {
+                event.setCancelled(true);
+            }
         }
+    }
+
+    private boolean isSameTeam(Player player, Player damager) {
+        return SpeedrunnerManager.isSpeedrunner(player) == SpeedrunnerManager.isSpeedrunner(damager);
     }
 
     private boolean entityIsPlayer(EntityType entityType) {

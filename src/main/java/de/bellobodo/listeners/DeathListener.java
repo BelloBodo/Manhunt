@@ -12,7 +12,7 @@ public class DeathListener implements Listener {
     @EventHandler
     public void PlayerDeathEvents(PlayerDeathEvent event) {
 
-        if (event.getEntity() == SpeedrunnerManager.getOfflineSpeedrunner()) {
+        if (event.getEntity() == SpeedrunnerManager.getSpeedrunner()) {
             if (Manhunt.getGameState() == GameState.IN_PROGRESS) {
                 Manhunt.setGameState(GameState.PENDING);
             }

@@ -14,7 +14,7 @@ public class Start {
             players.getInventory().clear();
 
             if (!SpeedrunnerManager.isSpeedrunner(players)) {
-                HunterManager.giveCompass(players.getInventory());
+                HunterManager.setupHunters(players.getInventory());
             }
 
 

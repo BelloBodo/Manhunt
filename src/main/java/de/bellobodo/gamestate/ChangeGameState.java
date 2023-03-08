@@ -13,10 +13,11 @@ public class ChangeGameState {
     public static boolean PENDINGtoIN_PROGRESS() {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                player.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
+            Bukkit.getOnlinePlayers().forEach(players -> {
+                players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
                         "Die Hunter", ChatColor.DARK_RED + "wurden freigelassen", 10, 20, 10);
-                player.playSound(player, Sound.ITEM_GOAT_HORN_SOUND_0, 1, 1);
+
+                players.playSound(players, Sound.ITEM_GOAT_HORN_SOUND_0, 1, 1);
             });
 
             HotbarManager.stopHotbar();
@@ -38,6 +39,8 @@ public class ChangeGameState {
 
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel",
                         ChatColor.DARK_AQUA + "wurde gestartet", 10, 20, 10);
+
+                players.playSound(players, Sound.BLOCK_METAL_PRESSURE_PLATE_CLICK_ON, 1, 1);
             });
 
             HotbarManager.stopHotbar();
@@ -52,9 +55,11 @@ public class ChangeGameState {
     public static boolean HEADSTARTtoIN_PROGRESS() {
         if (Manhunt.getGameState() == GameState.HEADSTART) {
 
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                player.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
+            Bukkit.getOnlinePlayers().forEach(players -> {
+                players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
                         "Die Hunter", ChatColor.DARK_RED + "wurden freigelassen", 10, 20, 10);
+
+                players.playSound(players, Sound.ITEM_GOAT_HORN_SOUND_0, 1, 1);
             });
 
             Manhunt.setGameState(GameState.IN_PROGRESS);
@@ -64,12 +69,32 @@ public class ChangeGameState {
         }
     }
 
-    public static boolean toPENDING() {
+    public static boolean toPENDING(final WinType winType) {
         if (Manhunt.getGameState() != GameState.PENDING) {
 
+            String title;
+            String subtitle;
+
+            switch (winType) {
+                case SPEEDRUNNER:
+                    title = ChatColor.BOLD + ChatColor.GREEN.toString() + "Der Speedrunner";
+                    subtitle = ChatColor.GREEN + "hat gewonnen";
+                    break;
+                case HUNTER:
+                    title = ChatColor.BOLD + ChatColor.RED.toString() + "Der Speedrunner";
+                    subtitle = ChatColor.RED + "ist gestorben";
+                    break;
+                case STOPPED:
+                    title = ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel";
+                    subtitle = ChatColor.DARK_AQUA + "wurde abgebrochen";
+                    break;
+                default:
+                    title = "";
+                    subtitle = "";
+            }
+
             Bukkit.getOnlinePlayers().forEach(players -> {
-                players.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() +
-                        "Das Spiel", ChatColor.DARK_AQUA + "wurde beendet", 10, 20, 10);
+                players.sendTitle(title, subtitle, 10, 40, 10);
             });
 
             Manhunt.getGameCounter().stopCounter();

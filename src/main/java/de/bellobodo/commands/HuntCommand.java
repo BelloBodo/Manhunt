@@ -2,6 +2,7 @@ package de.bellobodo.commands;
 
 import de.bellobodo.Manhunt;
 import de.bellobodo.gamestate.ChangeGameState;
+import de.bellobodo.gamestate.WinType;
 import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.gamestate.GameState;
 import de.bellobodo.render.HotbarManager;
@@ -84,7 +85,7 @@ public class HuntCommand implements CommandExecutor {
                 if (isGamestatePending(sender)) {
 
                 } else {
-                    ChangeGameState.toPENDING();
+                    ChangeGameState.toPENDING(WinType.STOPPED);
                 }
                 break;
             }

@@ -2,10 +2,7 @@ package de.bellobodo;
 
 import de.bellobodo.Counter.GameCounter;
 import de.bellobodo.commands.HuntCommand;
-import de.bellobodo.listeners.DamageListener;
-import de.bellobodo.listeners.DeathListener;
-import de.bellobodo.listeners.JoinListener;
-import de.bellobodo.listeners.MoveListener;
+import de.bellobodo.listeners.*;
 import de.bellobodo.gamestate.GameState;
 import de.bellobodo.render.HotbarManager;
 import org.bukkit.Bukkit;
@@ -31,10 +28,10 @@ public final class Manhunt extends JavaPlugin {
         gameCounter = new GameCounter();
 
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
-        Bukkit.getPluginManager().registerEvents(new DeathListener(), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new MoveListener(), this);
         Bukkit.getPluginManager().registerEvents(new JoinListener(), this);
-
+        Bukkit.getPluginManager().registerEvents(new EntityDeathListener(), this);
 
 
         getCommand("hunt").setExecutor(new HuntCommand());

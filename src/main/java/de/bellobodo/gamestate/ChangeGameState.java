@@ -14,6 +14,14 @@ public class ChangeGameState {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
+                if (SpeedrunnerManager.isSpeedrunner(players)) {
+                    SpeedrunnerManager.setupSpeedrunner(players);
+                } else {
+                    HunterManager.setupHunters(players);
+                }
+
+                HunterManager.setupHunters(players);
+
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
                         "Die Hunter", ChatColor.DARK_RED + "wurden freigelassen", 10, 20, 10);
 
@@ -33,8 +41,8 @@ public class ChangeGameState {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
-                if (!SpeedrunnerManager.isSpeedrunner(players)) {
-                    HunterManager.setupHunters(players);
+                if (SpeedrunnerManager.isSpeedrunner(players)) {
+                    SpeedrunnerManager.setupSpeedrunner(players);
                 }
 
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel",
@@ -56,6 +64,10 @@ public class ChangeGameState {
         if (Manhunt.getGameState() == GameState.HEADSTART) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
+                if (!SpeedrunnerManager.isSpeedrunner(players)) {
+                    HunterManager.setupHunters(players);
+                }
+
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
                         "Die Hunter", ChatColor.DARK_RED + "wurden freigelassen", 10, 20, 10);
 
@@ -81,8 +93,8 @@ public class ChangeGameState {
                     subtitle = ChatColor.GREEN + "hat gewonnen";
                     break;
                 case HUNTER:
-                    title = ChatColor.BOLD + ChatColor.RED.toString() + "Der Speedrunner";
-                    subtitle = ChatColor.RED + "ist gestorben";
+                    title = ChatColor.BOLD + ChatColor.RED.toString() + "Die Hunter";
+                    subtitle = ChatColor.RED + "haben gewonnen";
                     break;
                 case STOPPED:
                     title = ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel";
@@ -95,6 +107,7 @@ public class ChangeGameState {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
                 players.sendTitle(title, subtitle, 10, 40, 10);
+                players.sendMessage(title + " " + subtitle);
             });
 
             Manhunt.getGameCounter().stopCounter();

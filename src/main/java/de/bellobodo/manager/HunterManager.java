@@ -3,6 +3,7 @@ package de.bellobodo.manager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,11 +41,16 @@ public class HunterManager {
     }
 
     public static void setupHunters(Player player) {
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        player.setFoodLevel(40);
+        player.setExp(0);
+        player.setLevel(0);
+
         PlayerInventory inventory = player.getInventory();
 
-        inventory.setItem(0, new ItemStack(Material.COMPASS));
+        inventory.clear();
 
-        //TODO Heilen, Essen voll, XP clear
+        inventory.setItem(0, new ItemStack(Material.COMPASS));
     }
 
 }

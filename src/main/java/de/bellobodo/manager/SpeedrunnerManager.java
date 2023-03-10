@@ -1,10 +1,14 @@
 package de.bellobodo.manager;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public class SpeedrunnerManager {
 
@@ -87,5 +91,16 @@ public class SpeedrunnerManager {
                 return customLocation;
         }
         return null;
+    }
+
+    public static void setupSpeedrunner(Player player) {
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        player.setFoodLevel(40);
+        player.setExp(0);
+        player.setLevel(0);
+
+        PlayerInventory inventory = player.getInventory();
+
+        inventory.clear();
     }
 }

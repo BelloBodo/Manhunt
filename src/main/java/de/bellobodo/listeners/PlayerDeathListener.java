@@ -6,6 +6,9 @@ import de.bellobodo.gamestate.WinType;
 import de.bellobodo.manager.SpeedrunnerManager;
 import de.bellobodo.gamestate.GameState;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -13,14 +16,17 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 public class PlayerDeathListener implements Listener {
 
     @EventHandler
-    public void PlayerDeathEvent(PlayerDeathEvent event) {
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        Player player = event.getEntity();
 
-        if (event.getEntity() == SpeedrunnerManager.getSpeedrunner()) {
+        Bukkit.getScheduler().runTaskLater(Manhunt.getInstance(), () -> {
+            player.spigot().respawn();
+        }, 2);
+
+        if (SpeedrunnerManager.isSpeedrunner(player)) {
             ChangeGameState.toPENDING(WinType.HUNTER);
         }
 
-        Bukkit.getScheduler().runTaskLater(Manhunt.getInstance(), () -> {
-            event.getEntity().spigot().respawn();
-        }, 10);
+        event.setDeathMessage(ChatColor.BLUE + player.getName() + ChatColor.GRAY + " ist nun Tod.");
     }
 }

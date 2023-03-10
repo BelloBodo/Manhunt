@@ -1,4 +1,4 @@
-package de.bellobodo.Counter;
+package de.bellobodo.counter;
 
 import de.bellobodo.Manhunt;
 import org.bukkit.Bukkit;

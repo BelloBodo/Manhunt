@@ -60,12 +60,13 @@ public class HuntCommand implements CommandExecutor {
                         return true;
                     }
 
-                    int headstartSeconds = 0;
+                    int headstartSeconds;
 
                     try {
                         headstartSeconds = Integer.parseInt(args[1]);
                     } catch (NumberFormatException exception) {
                         sender.sendMessage(ChatColor.RED + "Du musst eine Zahl angeben.");
+                        break;
                     }
 
                     if (headstartSeconds > 0) {

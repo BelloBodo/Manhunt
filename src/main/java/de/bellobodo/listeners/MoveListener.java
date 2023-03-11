@@ -17,6 +17,6 @@ public class MoveListener implements Listener {
                 event.setCancelled(true);
             }
         }
-        //TODO Von anfangan nicht bewegen (Spectator Manager hinzufügen)
+        //TODO Spectator Manager hinzufügen
     }
 }

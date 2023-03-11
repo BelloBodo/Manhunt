@@ -47,9 +47,7 @@ public class HuntCommand implements CommandExecutor {
                 break;
             }
             case "start": {
-                if (isGamestateIngame(sender)) {
-
-                } else {
+                if (!isGamestateIngame(sender)) {
                     if (args.length != 2) {
                         sendUsage(sender);
                         return true;
@@ -74,18 +72,30 @@ public class HuntCommand implements CommandExecutor {
                     }
 
                     if (headstartSeconds == 0) {
-                        ChangeGameState.PENDINGtoIN_PROGRESS();
+                        ChangeGameState.PENDINGtoIN_PROGRESS(true);
                     }
 
                     Manhunt.getGameCounter().startCounter(headstartSeconds);
-                    ChangeGameState.PENDINGtoHEADSTART();
+                    ChangeGameState.PENDINGtoHEADSTART(true);
+                }
+                break;
+            }
+            case "resume": {
+                if (!isGamestateIngame(sender)) {
+                    if (Manhunt.getGameCounter().getSeconds() < 0) {
+                        Manhunt.getGameCounter().startCounter();
+                        ChangeGameState.PENDINGtoHEADSTART(false);
+                    } else if (Manhunt.getGameCounter().getSeconds() == 0) {
+                        sender.sendMessage(ChatColor.RED + "Das Spiel wurde noch nie gestartet.");
+                    } else {
+                        Manhunt.getGameCounter().startCounter();
+                        ChangeGameState.PENDINGtoIN_PROGRESS(false);
+                    }
                 }
                 break;
             }
             case "stop": {
-                if (isGamestatePending(sender)) {
-
-                } else {
+                if (!isGamestatePending(sender)) {
                     ChangeGameState.toPENDING(WinType.STOPPED);
                 }
                 break;
@@ -121,6 +131,6 @@ public class HuntCommand implements CommandExecutor {
 
     private void sendUsage(final CommandSender sender) {
         sender.sendMessage(ChatColor.BLUE + "Verwende" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY +
-                "/hunt start [Zeit], /hunt (add/remove) [Spieler]");
+                "/hunt start [Zeit], /hunt resume, /hunt (add/remove) [Spieler]");
     }
 }

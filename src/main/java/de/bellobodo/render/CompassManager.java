@@ -6,25 +6,35 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.CompassMeta;
 
 public class CompassManager {
 
     private static CompassMeta compassMeta;
 
+    private static ItemStack compass = new ItemStack(Material.COMPASS);
+
     public static void updatePlayerCompass() {
         Bukkit.getOnlinePlayers().forEach(players -> {
 
-            if (players.getInventory().contains(Material.COMPASS)) {
+            PlayerInventory inventory = players.getInventory();
 
-                players.getInventory().all(Material.COMPASS).forEach((index, itemStacks) -> {
+            if (inventory.contains(Material.COMPASS)) {
 
-                    updateCompassMeta(players.getWorld().getEnvironment());
+                updateCompassMeta(players.getWorld().getEnvironment());
 
+                inventory.all(Material.COMPASS).forEach((index, itemStacks) -> {
                     if (itemStacks.getType() == Material.COMPASS) {
                         itemStacks.setItemMeta(compassMeta);
                     }
                 });
+
+                if (inventory.getItemInOffHand().getType() == Material.COMPASS) {
+                    compass.setItemMeta(compassMeta);
+
+                    inventory.setItemInOffHand(compass);
+                }
             }
 
         });
@@ -32,9 +42,9 @@ public class CompassManager {
 
     private static void updateCompassMeta(final World.Environment environment) {
         if (compassMeta == null) {
-            ItemStack stack = new ItemStack(Material.COMPASS);
+            compass.getItemMeta();
 
-            compassMeta = (CompassMeta) stack.getItemMeta();
+            compassMeta = (CompassMeta) compass.getItemMeta();
             compassMeta.setLodestoneTracked(false);
             compassMeta.setDisplayName(ChatColor.GREEN + "Speedrunner Tracker");
         }

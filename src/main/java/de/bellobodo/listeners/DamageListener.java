@@ -21,6 +21,10 @@ public class DamageListener implements Listener {
 
         if (Manhunt.getGameState() == GameState.IN_PROGRESS) {
 
+            if (!(entityIsPlayer(event.getEntity().getType()))) {
+                return;
+            }
+
             final Player player = (Player) event.getEntity();
 
             if (isSameTeam(player, damager)) {

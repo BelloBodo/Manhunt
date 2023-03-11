@@ -10,17 +10,16 @@ import org.bukkit.Sound;
 
 public class ChangeGameState {
 
-    public static boolean PENDINGtoIN_PROGRESS() {
+    public static boolean PENDINGtoIN_PROGRESS(boolean resetSpeedrunnerLocation) {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
                 if (SpeedrunnerManager.isSpeedrunner(players)) {
                     SpeedrunnerManager.setupSpeedrunner(players);
                 } else {
+                    HunterManager.registerHunter(players);
                     HunterManager.setupHunters(players);
                 }
-
-                HunterManager.setupHunters(players);
 
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
                         "Die Hunter", ChatColor.DARK_RED + "wurden freigelassen", 10, 20, 10);
@@ -30,6 +29,10 @@ public class ChangeGameState {
 
             HotbarManager.stopHotbar();
 
+            if (resetSpeedrunnerLocation) {
+                SpeedrunnerManager.resetLocation();
+            }
+
             Manhunt.setGameState(GameState.IN_PROGRESS);
             return true;
         } else {
@@ -37,7 +40,7 @@ public class ChangeGameState {
         }
     }
 
-    public static boolean PENDINGtoHEADSTART() {
+    public static boolean PENDINGtoHEADSTART(boolean resetSpeedrunnerLocation) {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
@@ -65,6 +68,7 @@ public class ChangeGameState {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
                 if (!SpeedrunnerManager.isSpeedrunner(players)) {
+                    HunterManager.registerHunter(players);
                     HunterManager.setupHunters(players);
                 }
 

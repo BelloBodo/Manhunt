@@ -12,13 +12,11 @@ public class MoveListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        if (Manhunt.getGameState() != GameState.PENDING) {
-            if (!SpeedrunnerManager.isSpeedrunner(event.getPlayer())) {
-                if (Manhunt.getGameState() == GameState.HEADSTART) {
-                    event.setCancelled(true);
-                }
+        if (!SpeedrunnerManager.isSpeedrunner(event.getPlayer())) {
+            if (Manhunt.getGameState() == GameState.HEADSTART) {
+                event.setCancelled(true);
             }
-            //TODO Von anfangan nicht bewegen (Spectator Manager hinzufügen)
         }
+        //TODO Von anfangan nicht bewegen (Spectator Manager hinzufügen)
     }
 }

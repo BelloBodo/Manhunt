@@ -48,8 +48,6 @@ public class HunterManager {
 
         PlayerInventory inventory = player.getInventory();
 
-        inventory.clear();
-
         inventory.setItem(0, new ItemStack(Material.COMPASS));
     }
 

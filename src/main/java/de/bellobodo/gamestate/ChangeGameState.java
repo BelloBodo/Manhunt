@@ -1,9 +1,9 @@
 package de.bellobodo.gamestate;
 
 import de.bellobodo.Manhunt;
-import de.bellobodo.manager.HunterManager;
-import de.bellobodo.manager.SpeedrunnerManager;
-import de.bellobodo.render.HotbarManager;
+import de.bellobodo.manager.player.HunterManager;
+import de.bellobodo.manager.player.SpeedrunnerManager;
+import de.bellobodo.manager.render.HotbarManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -55,6 +55,10 @@ public class ChangeGameState {
             });
 
             HotbarManager.stopHotbar();
+
+            if (resetSpeedrunnerLocation) {
+                SpeedrunnerManager.resetLocation();
+            }
 
             Manhunt.setGameState(GameState.HEADSTART);
             return true;

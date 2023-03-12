@@ -1,7 +1,7 @@
 package de.bellobodo.listeners;
 
 import de.bellobodo.Manhunt;
-import de.bellobodo.manager.SpeedrunnerManager;
+import de.bellobodo.manager.player.SpeedrunnerManager;
 import de.bellobodo.gamestate.GameState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

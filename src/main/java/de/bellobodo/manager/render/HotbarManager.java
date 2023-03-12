@@ -1,4 +1,4 @@
-package de.bellobodo.render;
+package de.bellobodo.manager.render;
 
 import de.bellobodo.Manhunt;
 import de.bellobodo.converter.Converter;

@@ -4,7 +4,7 @@ import de.bellobodo.counter.GameCounter;
 import de.bellobodo.commands.HuntCommand;
 import de.bellobodo.listeners.*;
 import de.bellobodo.gamestate.GameState;
-import de.bellobodo.render.HotbarManager;
+import de.bellobodo.manager.render.HotbarManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

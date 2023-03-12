@@ -1,4 +1,4 @@
-package de.bellobodo.manager;
+package de.bellobodo.manager.player;
 
 import org.bukkit.Location;
 import org.bukkit.Material;

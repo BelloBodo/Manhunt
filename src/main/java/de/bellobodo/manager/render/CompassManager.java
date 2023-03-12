@@ -1,6 +1,6 @@
-package de.bellobodo.render;
+package de.bellobodo.manager.render;
 
-import de.bellobodo.manager.SpeedrunnerManager;
+import de.bellobodo.manager.player.SpeedrunnerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

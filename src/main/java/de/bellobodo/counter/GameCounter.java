@@ -2,10 +2,10 @@ package de.bellobodo.counter;
 
 import de.bellobodo.Manhunt;
 import de.bellobodo.gamestate.ChangeGameState;
-import de.bellobodo.manager.SpeedrunnerManager;
+import de.bellobodo.manager.player.SpeedrunnerManager;
 import de.bellobodo.gamestate.GameState;
-import de.bellobodo.render.CompassManager;
-import de.bellobodo.render.HotbarManager;
+import de.bellobodo.manager.render.CompassManager;
+import de.bellobodo.manager.render.HotbarManager;
 
 public class GameCounter extends Counter {
     @Override

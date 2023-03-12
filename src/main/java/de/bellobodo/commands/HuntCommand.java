@@ -81,13 +81,15 @@ public class HuntCommand implements CommandExecutor {
             }
             case "resume": {
                 if (!isGamestateIngame(sender)) {
-                    if (Manhunt.getGameCounter().getSeconds() < 0) {
-                        Manhunt.getGameCounter().startCounter();
+                    int gameCounterSeconds = Manhunt.getGameCounter().getSeconds();
+                    if (gameCounterSeconds < 0) {
+                        Manhunt.getGameCounter().startCounter(gameCounterSeconds);
                         ChangeGameState.PENDINGtoHEADSTART(false);
-                    } else if (Manhunt.getGameCounter().getSeconds() == 0) {
-                        sender.sendMessage(ChatColor.RED + "Das Spiel wurde noch nie gestartet.");
+                    } else if (gameCounterSeconds == 0) {
+                        Manhunt.getGameCounter().startCounter(gameCounterSeconds);
+                        ChangeGameState.PENDINGtoHEADSTART(false);
                     } else {
-                        Manhunt.getGameCounter().startCounter();
+                        Manhunt.getGameCounter().startCounter(gameCounterSeconds);
                         ChangeGameState.PENDINGtoIN_PROGRESS(false);
                     }
                 }

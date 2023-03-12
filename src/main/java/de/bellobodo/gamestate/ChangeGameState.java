@@ -10,15 +10,17 @@ import org.bukkit.Sound;
 
 public class ChangeGameState {
 
-    public static boolean PENDINGtoIN_PROGRESS(boolean resetSpeedrunnerLocation) {
+    public static boolean PENDINGtoIN_PROGRESS(final boolean reset) {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
-                if (SpeedrunnerManager.isSpeedrunner(players)) {
-                    SpeedrunnerManager.setupSpeedrunner(players);
-                } else {
-                    HunterManager.registerHunter(players);
-                    HunterManager.setupHunters(players);
+                if (reset) {
+                    if (SpeedrunnerManager.isSpeedrunner(players)) {
+                        SpeedrunnerManager.setupSpeedrunner(players);
+                    } else {
+                        HunterManager.registerHunter(players);
+                        HunterManager.setupHunters(players);
+                    }
                 }
 
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
@@ -29,8 +31,9 @@ public class ChangeGameState {
 
             HotbarManager.stopHotbar();
 
-            if (resetSpeedrunnerLocation) {
+            if (reset) {
                 SpeedrunnerManager.resetLocation();
+                HunterManager.clearHunters();
             }
 
             Manhunt.setGameState(GameState.IN_PROGRESS);
@@ -40,13 +43,19 @@ public class ChangeGameState {
         }
     }
 
-    public static boolean PENDINGtoHEADSTART(boolean resetSpeedrunnerLocation) {
+    public static boolean PENDINGtoHEADSTART(final boolean reset) {
         if (Manhunt.getGameState() == GameState.PENDING) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
-                if (SpeedrunnerManager.isSpeedrunner(players)) {
-                    SpeedrunnerManager.setupSpeedrunner(players);
+                if (reset) {
+                    if (SpeedrunnerManager.isSpeedrunner(players)) {
+                        SpeedrunnerManager.setupSpeedrunner(players);
+                    } else {
+                        HunterManager.registerHunter(players);
+                        HunterManager.setupHunters(players);
+                    }
                 }
+
 
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_AQUA.toString() + "Das Spiel",
                         ChatColor.DARK_AQUA + "wurde gestartet", 10, 20, 10);
@@ -56,8 +65,9 @@ public class ChangeGameState {
 
             HotbarManager.stopHotbar();
 
-            if (resetSpeedrunnerLocation) {
+            if (reset) {
                 SpeedrunnerManager.resetLocation();
+                HunterManager.clearHunters();
             }
 
             Manhunt.setGameState(GameState.HEADSTART);
@@ -71,11 +81,6 @@ public class ChangeGameState {
         if (Manhunt.getGameState() == GameState.HEADSTART) {
 
             Bukkit.getOnlinePlayers().forEach(players -> {
-                if (!SpeedrunnerManager.isSpeedrunner(players)) {
-                    HunterManager.registerHunter(players);
-                    HunterManager.setupHunters(players);
-                }
-
                 players.sendTitle(ChatColor.BOLD + ChatColor.DARK_RED.toString() +
                         "Die Hunter", ChatColor.DARK_RED + "wurden freigelassen", 10, 20, 10);
 
@@ -119,8 +124,6 @@ public class ChangeGameState {
             });
 
             Manhunt.getGameCounter().stopCounter();
-
-            HunterManager.clearHunters();
 
             HotbarManager.startHotbar();
 

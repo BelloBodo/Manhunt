@@ -99,5 +99,9 @@ public class SpeedrunnerManager {
         player.setFoodLevel(40);
         player.setExp(0);
         player.setLevel(0);
+
+        PlayerInventory inventory = player.getInventory();
+
+        inventory.clear();
     }
 }

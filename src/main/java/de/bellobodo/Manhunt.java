@@ -6,7 +6,10 @@ import de.bellobodo.listeners.*;
 import de.bellobodo.gamestate.GameState;
 import de.bellobodo.manager.render.HotbarManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Random;
 
 public final class Manhunt extends JavaPlugin {
 

@@ -132,6 +132,6 @@ public class HuntCommand implements CommandExecutor {
 
     private void sendUsage(final CommandSender sender) {
         sender.sendMessage(ChatColor.BLUE + "Verwende" + ChatColor.GRAY + ": " + ChatColor.DARK_GRAY +
-                "/hunt start [Zeit], /hunt resume, /hunt (add/remove) [Spieler]");
+                "/hunt start [Zeit], /hunt resume, /hunt stop, /hunt set [Spieler]");
     }
 }

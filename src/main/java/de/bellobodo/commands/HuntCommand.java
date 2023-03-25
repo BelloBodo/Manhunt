@@ -1,6 +1,7 @@
 package de.bellobodo.commands;
 
 import de.bellobodo.Manhunt;
+import de.bellobodo.converter.Converter;
 import de.bellobodo.gamestate.ChangeGameState;
 import de.bellobodo.gamestate.WinType;
 import de.bellobodo.manager.player.SpeedrunnerManager;
@@ -60,7 +61,7 @@ public class HuntCommand implements CommandExecutor {
                     int headstartSeconds;
 
                     try {
-                        headstartSeconds = Integer.parseInt(args[1]);
+                        headstartSeconds = Converter.convertTimeToInt(args[1]);
                     } catch (NumberFormatException exception) {
                         sender.sendMessage(ChatColor.RED + "Du musst eine Zahl angeben.");
                         break;

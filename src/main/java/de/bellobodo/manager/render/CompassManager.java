@@ -31,9 +31,7 @@ public class CompassManager {
                 });
 
                 if (inventory.getItemInOffHand().getType() == Material.COMPASS) {
-                    compass.setItemMeta(compassMeta);
-
-                    inventory.setItemInOffHand(compass);
+                    inventory.getItemInOffHand().setItemMeta(compassMeta);
                 }
             }
 

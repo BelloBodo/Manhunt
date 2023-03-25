@@ -1,10 +1,9 @@
 package de.bellobodo.manager.render;
 
 import de.bellobodo.manager.player.SpeedrunnerManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.World;
+import net.md_5.bungee.api.ChatMessageType;
+import org.bukkit.*;
+import org.bukkit.boss.BossBar;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.CompassMeta;
@@ -29,10 +28,6 @@ public class CompassManager {
                         itemStacks.setItemMeta(compassMeta);
                     }
                 });
-
-                if (inventory.getItemInOffHand().getType() == Material.COMPASS) {
-                    inventory.getItemInOffHand().setItemMeta(compassMeta);
-                }
             }
 
         });

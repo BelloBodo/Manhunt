@@ -16,14 +16,14 @@ public class JoinListener implements Listener {
 
         Player player = event.getPlayer();
 
-        if (SpeedrunnerManager.isSpeedrunner(event.getPlayer())) {
-            SpeedrunnerManager.setSpeedrunner(event.getPlayer());
-        } else if (Manhunt.getGameState() != GameState.PENDING) {
+        if (!SpeedrunnerManager.isSpeedrunner(player)) {
+            if (Manhunt.getGameState() != GameState.PENDING) {
 
-            if (!HunterManager.isRegisteredHunter(player)) {
-                HunterManager.setupHunters(player);
+                if (!HunterManager.isRegisteredHunter(player)) {
+                    HunterManager.setupHunters(player);
 
-                HunterManager.registerHunter(player);
+                    HunterManager.registerHunter(player);
+                }
             }
         }
     }

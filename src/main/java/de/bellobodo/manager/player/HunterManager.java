@@ -26,11 +26,7 @@ public class HunterManager {
     }
 
     public static boolean isRegisteredHunter(Player player) {
-        if (registeredHunters.contains(player)) {
-            return true;
-        } else {
-            return false;
-        }
+        return registeredHunters.contains(player);
     }
 
     public static void clearHunters() {

@@ -15,7 +15,7 @@ public class PlayerRespawnListener implements Listener {
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         if (Manhunt.getGameState() != GameState.PENDING) {
-            if (!SpeedrunnerManager.isSpeedrunner(player)) {
+            if (HunterManager.isRegisteredHunter(player)) {
                 HunterManager.setupHunters(player);
             }
         }

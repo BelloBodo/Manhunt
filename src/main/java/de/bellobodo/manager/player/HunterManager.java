@@ -1,5 +1,6 @@
 package de.bellobodo.manager.player;
 
+import de.bellobodo.guilibrary.builder.SimpleGUIBuilder;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
@@ -7,10 +8,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class HunterManager {
 
-    private static ArrayList<Player> registeredHunters = new ArrayList<Player>();
+    private static ArrayList<UUID> registeredHunters = new ArrayList<>();
 
 
     /**
@@ -20,20 +22,20 @@ public class HunterManager {
         if (SpeedrunnerManager.isSpeedrunner(player)) {
             return false;
         } else {
-            registeredHunters.add(player);
+            registeredHunters.add(player.getUniqueId());
             return true;
         }
     }
 
     public static boolean isRegisteredHunter(Player player) {
-        return registeredHunters.contains(player);
+        return registeredHunters.contains(player.getUniqueId());
     }
 
     public static void clearHunters() {
         registeredHunters.clear();
     }
 
-    public static void setupHunters(Player player) {
+    public static void setupHunter(Player player) {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(40);
         player.setExp(0);

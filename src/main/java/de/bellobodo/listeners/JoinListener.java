@@ -7,6 +7,7 @@ import de.bellobodo.gamestate.GameState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class JoinListener implements Listener {
@@ -17,14 +18,23 @@ public class JoinListener implements Listener {
         Player player = event.getPlayer();
 
         if (!SpeedrunnerManager.isSpeedrunner(player)) {
-            if (Manhunt.getGameState() != GameState.PENDING) {
+            if (!(Manhunt.getGameState() == GameState.IN_PROGRESS || Manhunt.getGameState() == GameState.PAUSED)) {
+
+
+            } else {
+                player.sendMessage(String.valueOf(HunterManager.isRegisteredHunter(player)));
 
                 if (!HunterManager.isRegisteredHunter(player)) {
-                    HunterManager.setupHunters(player);
+                    HunterManager.setupHunter(player);
 
                     HunterManager.registerHunter(player);
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerPreLoginEvent(AsyncPlayerPreLoginEvent event) {
+
     }
 }

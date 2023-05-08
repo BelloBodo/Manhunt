@@ -1,18 +1,17 @@
 package de.bellobodo.manager.player;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.UUID;
+
 public class SpeedrunnerManager {
 
-    private static Player speedrunner;
+    private static UUID speedrunner;
 
     private static Location overworldLocation;
 
@@ -22,22 +21,24 @@ public class SpeedrunnerManager {
 
     private static Location customLocation;
 
-
-
     public static void updateLocation() {
-        if (speedrunner.isOnline()) {
-            switch (speedrunner.getWorld().getEnvironment()) {
+        Player player = Bukkit.getPlayer(speedrunner);
+
+        if (player == null) { return; }
+
+        if (player.isOnline()) {
+            switch (player.getWorld().getEnvironment()) {
                 case NORMAL:
-                    overworldLocation = speedrunner.getLocation();
+                    overworldLocation = player.getLocation();
                     break;
                 case NETHER:
-                    netherLocation = speedrunner.getLocation();
+                    netherLocation = player.getLocation();
                     break;
                 case THE_END:
-                    endLocation = speedrunner.getLocation();
+                    endLocation = player.getLocation();
                     break;
                 case CUSTOM:
-                    customLocation = speedrunner.getLocation();
+                    customLocation = player.getLocation();
                     break;
             }
         }
@@ -55,7 +56,7 @@ public class SpeedrunnerManager {
      */
     public static boolean isSpeedrunner(final Player player) {
         try {
-            return speedrunner.getUniqueId().equals(player.getUniqueId());
+            return speedrunner.equals(player.getUniqueId());
         } catch (NullPointerException exception) {
             return false;
         }
@@ -66,18 +67,18 @@ public class SpeedrunnerManager {
      */
     public static boolean setSpeedrunner(final Player player) {
         if (speedrunner == null) {
-            speedrunner = player;
+            speedrunner = player.getUniqueId();
             return true;
-        } else if (speedrunner.getUniqueId().equals(player.getUniqueId())){
+        } else if (speedrunner.equals(player.getUniqueId())){
             return false;
         } else {
-            speedrunner = player;
+            speedrunner = player.getUniqueId();
             return true;
         }
     }
 
     public static Player getSpeedrunner() {
-        return speedrunner;
+        return Bukkit.getPlayer(speedrunner);
     }
 
     public static Location getLocation(final World.Environment environment) {

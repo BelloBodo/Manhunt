@@ -19,7 +19,7 @@ public class ChangeGameState {
                         SpeedrunnerManager.setupSpeedrunner(players);
                     } else {
                         HunterManager.registerHunter(players);
-                        HunterManager.setupHunters(players);
+                        HunterManager.setupHunter(players);
                     }
                 }
 
@@ -52,7 +52,7 @@ public class ChangeGameState {
                         SpeedrunnerManager.setupSpeedrunner(players);
                     } else {
                         HunterManager.registerHunter(players);
-                        HunterManager.setupHunters(players);
+                        HunterManager.setupHunter(players);
                     }
                 }
 

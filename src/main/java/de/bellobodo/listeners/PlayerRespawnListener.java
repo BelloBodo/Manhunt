@@ -3,7 +3,6 @@ package de.bellobodo.listeners;
 import de.bellobodo.Manhunt;
 import de.bellobodo.gamestate.GameState;
 import de.bellobodo.manager.player.HunterManager;
-import de.bellobodo.manager.player.SpeedrunnerManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +15,7 @@ public class PlayerRespawnListener implements Listener {
         Player player = event.getPlayer();
         if (Manhunt.getGameState() != GameState.PENDING) {
             if (HunterManager.isRegisteredHunter(player)) {
-                HunterManager.setupHunters(player);
+                HunterManager.setupHunter(player);
             }
         }
     }

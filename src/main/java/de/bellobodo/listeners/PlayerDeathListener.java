@@ -17,10 +17,6 @@ public class PlayerDeathListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         Player player = event.getEntity();
 
-        Bukkit.getScheduler().runTaskLater(Manhunt.getInstance(), () -> {
-            player.spigot().respawn();
-        }, 2);
-
         if (SpeedrunnerManager.isSpeedrunner(player)) {
             ChangeGameState.toPENDING(WinType.HUNTER);
         }
